@@ -1,0 +1,18 @@
+{
+  "files": [
+    "media/baseline-comparison.mp4",
+    "media/bench-constrained-m.mp4",
+    "media/bench-constrained-s.mp4",
+    "media/bench-core-m.mp4",
+    "media/bench-core-s.mp4",
+    "media/bench-easy-m.mp4",
+    "media/bench-easy-s.mp4",
+    "media/real-coffee.mp4",
+    "media/real-obstacle.mp4",
+    "media/real-referent-gray.mp4",
+    "media/real-referent-white.mp4",
+    "media/real-single.mp4",
+    "media/real-terminal.mp4",
+    "media/teaser.mp4"
+  ]
+}

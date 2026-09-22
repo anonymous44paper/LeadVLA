@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="LeadVLA learns follower-aware robot leading through structured Path, Pace, and Residual, with LeadInfra and LeadBench.">
+  <meta name="theme-color" content="#ffffff">
+  <title>LeadVLA — Follower-Aware Robot Leading</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=fe3d72189eea5">
+  <script src="content.js?v=cf7414f344fa" defer></script>
+  <script src="app.js?v=77556e901e82" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="wordmark" href="#overview"><img src="assets/mark.svg" width="27" height="27" alt="">LeadVLA</a>
+      <div class="nav-links"><a href="#method">Method</a><a href="#real-world">Real world</a><a href="#leadinfra">LeadInfra</a><a href="#leadbench">LeadBench</a><a href="#results">Results</a></div>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero container" id="overview" aria-labelledby="paper-title">
+      <h1 id="paper-title"><span class="title-name">LeadVLA</span><span class="title-description">Learning Follower-Aware Route Execution<br class="desktop-break"> for Robot Leading</span></h1>
+      <div class="hero-actions"><button class="button primary code-button" type="button" disabled title="GitHub link coming soon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 7-5 5 5 5m10-10 5 5-5 5m-3-14-4 18"/></svg>Code</button></div>
+      <div class="teaser-slot" id="teaser" data-media-slot="teaser">
+        <div class="empty-media"><p class="empty-title">Teaser video coming soon</p></div>
+      </div>
+      <p class="teaser-caption">LeadVLA enables a robot to actively lead a designated follower along a route, while adapting its pace and local motion to the follower’s evolving behavior.</p>
+    </section>
+
+    <section class="section section-tint" id="method" aria-labelledby="method-title">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">01 / Method</p><h2 id="method-title">Keep the route. Learn how to adapt.</h2></div>
+        <div class="method-insight two-columns">
+          <article><h3>The problem</h3><p>Humans can lead someone along a planned route while naturally adjusting their pace and path as the follower slows down, stops, or falls behind. For robots, learning both abilities together in one model remains challenging.</p></article>
+          <article><h3>Our idea</h3><p>We separate the two jobs: keep the planned route as a stable guide, and learn when to slow down, wait, resume, or make small local adjustments.</p></article>
+        </div>
+        <figure class="paper-figure"><button class="figure-zoom" type="button" data-zoom="assets/images/method.webp" aria-label="Enlarge the LeadVLA method diagram"><img src="assets/images/method.webp" width="6283" height="1962" loading="lazy" alt="Temporal front and rear RGB, a language instruction, and route context feed a multimodal backbone. Twenty-four shared action queries support Pace, auxiliary semantic heads, and Residual. The Path Composer combines the route, Pace, and Residual into robot-local waypoints."><span class="zoom-hint">↗ Expand figure</span></button><figcaption>LeadVLA jointly processes front- and rear-view RGB history, the instruction, and the planned route. In a single forward pass, it predicts Pace and Residual, which a deterministic Path Composer combines with the given route to generate the robot’s final waypoints.</figcaption></figure>
+        <div class="three-columns method-roles">
+          <article><span class="role-index path-color">01 — Path</span><h3>Keep the route.</h3><p>Use the planned route as a stable guide for where the robot should go.</p></article>
+          <article><span class="role-index pace-color">02 — Pace</span><h3>Control progress along the route.</h3><p>Speed up, slow down, stop, or resume along the same guide route based on how the follower is moving.</p></article>
+          <article><span class="role-index residual-color">03 — Residual</span><h3>Adjust locally when needed.</h3><p>On top of the paced route, make small local adjustments for the follower and nearby scene changes.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="real-world" aria-labelledby="real-title">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">02 / Real-world deployment</p><h2 id="real-title">See the whole leading task.</h2></div>
+        <div class="real-task-demos">
+          <div class="real-task-tabs" role="tablist" aria-label="Complete robot-leading demos">
+            <button id="real-task-coffee-tab" type="button" role="tab" aria-selected="true" aria-controls="real-task-panel" data-real-demo="coffee"><span>Demo 01</span>Leading in coffee shop<small class="real-task-description">A robot waiter leads a customer through the coffee shop to their seat while adapting to the customer’s movement.</small></button>
+            <button id="real-task-terminal-tab" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="real-task-panel" data-real-demo="terminal"><span>Demo 02</span>Leading in airport terminal<small class="real-task-description">A robot guide leads a designated traveler through the terminal to the departure area along a planned route.</small></button>
+          </div>
+          <div id="real-task-panel" class="video-surface real-task-player" role="tabpanel" tabindex="0" aria-labelledby="real-task-coffee-tab">
+            <video id="real-task-video" controls controlslist="nodownload" muted playsinline preload="none" aria-describedby="real-task-caption" aria-label="Complete leading task in a coffee shop"></video>
+            <p class="media-error" hidden>This clip could not be loaded. Please try another demo.</p>
+          </div>
+          <p id="real-task-caption" class="real-task-caption">The robot follows the planned route while adapting to the follower throughout the complete task.</p>
+        </div>
+        <div class="section-heading real-features-heading"><h2>A closer look at key features of LeadVLA</h2></div>
+        <article class="real-feature">
+          <div data-media-slot="realSingle" class="media-slot"></div>
+          <div class="real-copy">
+            <h3>Pause, wait, resume</h3>
+            <p>The robot pauses when its designated follower stops for a phone call or a conversation. It keeps waiting even when the distractor walks away, and resumes leading when the target follower is ready to move again.</p>
+          </div>
+        </article>
+
+        <div class="real-referent-group" role="group" aria-labelledby="real-referent-title">
+          <div class="real-group-heading">
+            <h3 id="real-referent-title">Lead and react to the right follower.</h3>
+            <p>Same scene and route. A different instruction changes whose behavior the robot responds to.</p>
+          </div>
+          <div class="real-pair">
+            <article>
+              <div data-media-slot="realReferentGray" class="media-slot"></div>
+              <h4>Gray shirt, black shorts</h4>
+              <p>The robot leads the person in the gray shirt and black shorts, adjusting its motion to this follower rather than the person in white.</p>
+              <blockquote class="real-prompt">
+                <span class="real-prompt-label">Example instruction</span>
+                <p>Lead the person wearing a <strong>gray shirt and black shorts</strong> across the corridor, keeping them at a far distance and centered behind you.</p>
+              </blockquote>
+            </article>
+            <article>
+              <div data-media-slot="realReferentWhite" class="media-slot"></div>
+              <h4>White T-shirt, gray trousers</h4>
+              <p>With the target description changed, the robot now leads and responds to the person in the white T-shirt and gray trousers, while the other person becomes the distractor.</p>
+              <blockquote class="real-prompt">
+                <span class="real-prompt-label">Example instruction</span>
+                <p>Lead the person wearing a <strong>white T-shirt and gray trousers</strong> across the corridor, keeping them at a far distance and centered behind you.</p>
+              </blockquote>
+            </article>
+          </div>
+        </div>
+
+        <article class="real-feature real-interference">
+          <div data-media-slot="realObstacle" class="media-slot"></div>
+          <div class="real-copy">
+            <h3>Local route interference</h3>
+            <p>The robot continues leading around an obstacle while responding to the designated follower in the white T-shirt and gray trousers—not the distractor.</p>
+            <p>The input route and instruction are unchanged from the white-T-shirt example above. The robot adapts its local motion to get around the obstacle without being given a new route.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="leadinfra" aria-labelledby="infra-title">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">03 / LeadInfra</p><h2 id="infra-title">A world to build diverse robot-leading scenarios.</h2><p>LeadInfra builds diverse robot-leading episodes by combining routes, robots, followers and distractors, human–robot interaction, and scene changes in closed loop.</p></div>
+        <div class="subsection-heading"><h3>Assets</h3></div>
+        <figure class="paper-figure infra-assets"><button class="figure-zoom" type="button" data-zoom="assets/images/leadinfra-assets.webp" aria-label="Enlarge the LeadInfra asset overview"><img src="assets/images/leadinfra-assets.webp" width="2048" height="665" loading="lazy" alt="LeadInfra assets spanning indoor and outdoor environments, robot embodiments, compositional human appearances, and static scene objects."><span class="zoom-hint">↗ Expand figure</span></button><figcaption>LeadInfra turns 65K m² of navigable indoor and outdoor space, 3 robot embodiments, 756 human appearance configurations, 25 sensor blueprints, and 142 static scene assets into a large-scale playground for diverse robot-leading interactions.</figcaption></figure>
+        <div class="subsection-heading"><h3>How is the data generated?</h3></div>
+        <figure class="paper-figure infra-generation"><button class="figure-zoom" type="button" data-zoom="assets/images/leadinfra-generation.webp" aria-label="Enlarge the LeadInfra data-generation pipeline"><img src="assets/images/leadinfra-generation.webp" width="2400" height="1298" loading="lazy" alt="LeadInfra data-generation pipeline: select a scene and map, generate a global route, set up the robot and causal expert, configure follower and distractor programs, add route interference, and record the closed-loop interaction."><span class="zoom-hint">↗ Expand figure</span></button><figcaption>LeadInfra builds an episode, lets the interaction unfold in closed loop, and generates supervision from what actually happens.</figcaption></figure>
+        <div class="subsection-heading"><h3>Explore the interactions</h3><p>See how different follower behaviors, visibility conditions, formations, and referents change the leading interaction.</p></div>
+        <div class="demo-explorer">
+          <div class="explorer-tabs" role="tablist" aria-label="Simulation category">
+            <button id="tab-motion" type="button" role="tab" aria-selected="true" aria-controls="simulation-panel" data-category="motion">Follower behavior <span>8</span></button>
+            <button id="tab-presence" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="simulation-panel" data-category="presence">Presence &amp; reacquisition <span>5</span></button>
+            <button id="tab-formation" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="simulation-panel" data-category="formation">Distance &amp; formation</button>
+            <button id="tab-target" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="simulation-panel" data-category="target">Target switch</button>
+            <button id="tab-actors" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="simulation-panel" data-category="actors">Compositional actors</button>
+          </div>
+          <div id="simulation-panel" role="tabpanel" aria-labelledby="tab-motion">
+            <div id="case-options" class="case-options" aria-label="Choose a simulation case"></div>
+            <div class="explorer-body"><div class="video-surface"><video id="simulation-video" controls controlslist="nodownload" muted playsinline preload="none" aria-label="Selected LeadInfra simulation"></video><p class="media-error" hidden>This clip could not be loaded. Please try another case.</p></div><div class="case-copy" aria-live="polite"><span class="small-label">LEADINFRA VISUALIZATION</span><h4 id="case-title">Stop &amp; recover</h4><p id="case-description"></p><div class="observation-note"><span class="small-label">WHAT TO LOOK FOR</span><p id="case-observation"></p></div></div></div>
+          </div>
+        </div>
+        <noscript><p>Enable JavaScript to browse the simulation clips.</p></noscript>
+        <p class="infra-note">In LeadInfra, our causal expert responds to the current follower and scene state, including simulator-derived geometry, without reading hidden behavior programs or future interaction schedules. Supervision follows how the interaction actually unfolds.</p>
+      </div>
+    </section>
+
+    <section class="section" id="leadbench" aria-labelledby="bench-title">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">04 / LeadBench</p><h2 id="bench-title">A closed-loop benchmark for robot leading.</h2><p>LeadBench evaluates whether a robot can complete the route<br class="desktop-break"> while continuously responding to the designated follower.</p></div>
+        <p class="bench-summary">108 held-out episodes · 3 difficulty levels · single- &amp; multi-person · frozen evaluation conditions</p>
+        <div class="bench-matrix-scroll" tabindex="0" role="region" aria-label="LeadBench video comparison by difficulty and number of people; scroll horizontally on small screens">
+          <table class="bench-matrix">
+            <caption class="visually-hidden">Single-person and multi-person scene previews across Core, Easy, and Constrained conditions, all with steady following.</caption>
+            <colgroup><col class="bench-row-label"><col><col><col></colgroup>
+            <thead><tr><td></td><th scope="col"><span class="bench-column-label">Core</span><p>Clean route</p></th><th scope="col"><span class="bench-column-label">Easy</span><p>Route interference</p></th><th scope="col"><span class="bench-column-label">Constrained</span><p>Stronger interference</p></th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Single</th><td><figure><div data-media-slot="benchCoreSingle" class="media-slot"></div><figcaption><span class="bench-case-description">Single follower, clean route execution.</span></figcaption></figure></td><td><figure><div data-media-slot="benchEasySingle" class="media-slot"></div><figcaption><span class="bench-case-description">Follower-aware leading with local route interference.</span></figcaption></figure></td><td><figure><div data-media-slot="benchConstrainedSingle" class="media-slot"></div><figcaption><span class="bench-case-description">Stronger and repeated route interference.</span></figcaption></figure></td></tr>
+              <tr><th scope="row">Multi</th><td><figure><div data-media-slot="benchCoreMulti" class="media-slot"></div><figcaption><span class="bench-case-description">Designated follower with a distractor present.</span></figcaption></figure></td><td><figure><div data-media-slot="benchEasyMulti" class="media-slot"></div><figcaption><span class="bench-case-description">Route interference plus target–distractor interaction.</span></figcaption></figure></td><td><figure><div data-media-slot="benchConstrainedMulti" class="media-slot"></div><figcaption><span class="bench-case-description">Route recovery, follower response, and referent ambiguity together.</span></figcaption></figure></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bench-video-note"><em>* <strong>Scene previews.</strong> These videos showcase the six scenario settings. Followers maintain steady tracking throughout, without additional scripted behavior changes.</em></p>
+        <p class="bench-protocol">Routes, actors, instructions, follower behaviors, and interaction events are frozen before evaluation, and every policy runs fully closed loop.</p>
+        <div class="bench-measures" aria-labelledby="bench-measures-title">
+          <h3 id="bench-measures-title">What does LeadBench measure?</h3>
+          <dl class="bench-metrics">
+            <div><dt>LSR</dt><dd><span>Task completion</span><p>Did the robot and follower finish together?</p></dd></div>
+            <div><dt>RF</dt><dd><span>Route fidelity</span><p>Did the robot stay faithful to the intended route?</p></dd></div>
+            <div><dt>TRS</dt><dd><span>Follower response</span><p>Did it react to the right person at the right time?</p></dd></div>
+            <div><dt>SCS</dt><dd><span>Distance &amp; formation</span><p>Did it maintain the requested interaction geometry?</p></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section section-tint" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">05 / Selected results</p><h2 id="results-title">How does LeadVLA perform on LeadBench?</h2><p>We compare LeadVLA with representative robot-leading policies under the same closed-loop evaluation.</p></div>
+        <div data-media-slot="baselineComparison" class="media-slot results-comparison"></div>
+        <div class="section-heading results-table-heading"><h2>Overall closed-loop performance</h2><p>LeadVLA achieves the highest overall task success among the evaluated robot policies.</p></div>
+        <figure class="result-table main-results">
+          <figcaption id="main-results-caption">Table 1: <strong>Overall closed-loop performance on LeadBench.</strong> Each entry reports Single-person | Multi-person (S | M) performance. For each metric, the top three robot policies are highlighted as <span class="rank-1">1st</span>, <span class="rank-2">2nd</span>, and <span class="rank-3">3rd</span>. Ties share the same rank. Human Expert is shown in gray as a reference and excluded from ranking.</figcaption>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Overall LeadBench results; scroll horizontally on smaller screens">
+            <table class="benchmark-results-table" aria-labelledby="main-results-caption">
+              <thead>
+                <tr><th scope="col" rowspan="3">Method</th><th scope="colgroup" colspan="4">Core</th><th scope="colgroup" colspan="4">Easy</th><th scope="colgroup" colspan="4">Constrained</th></tr>
+                <tr><th scope="col">LSR ↑</th><th scope="col">RF ↑</th><th scope="col">TRS ↑</th><th scope="col">SCS ↑</th><th scope="col">LSR ↑</th><th scope="col">RF ↑</th><th scope="col">TRS ↑</th><th scope="col">SCS ↑</th><th scope="col">LSR ↑</th><th scope="col">RF ↑</th><th scope="col">TRS ↑</th><th scope="col">SCS ↑</th></tr>
+                <tr><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th><th scope="col" class="person-count">S | M</th></tr>
+              </thead>
+              <tbody>
+              <tr><th scope="row">Fiore et al.</th><td class="difficulty-start"><span class="rank-1" aria-label=".83, rank 1">.83</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".38, rank 2">.38</span></td><td><span class="rank-1" aria-label=".99, rank 1">.99</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".94, rank 1">.94</span></td><td><span class="rank-3" aria-label=".26, rank 3">.26</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".24, rank 2">.24</span></td><td><span>.09</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".07, rank 2">.07</span></td><td class="difficulty-start"><span class="rank-2" aria-label=".42, rank 2">.42</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".13, rank 1">.13</span></td><td><span class="rank-1" aria-label=".96, rank 1">.96</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".78, rank 1">.78</span></td><td><span class="rank-3" aria-label=".27, rank 3">.27</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".26, rank 3">.26</span></td><td><span>.05</span><span class="pair-divider" aria-hidden="true"> | </span><span>.06</span></td><td class="difficulty-start"><span>.08</span><span class="pair-divider" aria-hidden="true"> | </span><span>.00</span></td><td><span class="rank-1" aria-label=".99, rank 1">.99</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".57, rank 3">.57</span></td><td><span>.24</span><span class="pair-divider" aria-hidden="true"> | </span><span>.25</span></td><td><span>.09</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".13, rank 3">.13</span></td></tr>
+              <tr><th scope="row">Nanavati et al.</th><td class="difficulty-start"><span class="rank-3" aria-label=".67, rank 3">.67</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".29, rank 3">.29</span></td><td><span class="rank-2" aria-label=".97, rank 2">.97</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".93, rank 2">.93</span></td><td><span>.17</span><span class="pair-divider" aria-hidden="true"> | </span><span>.14</span></td><td><span>.07</span><span class="pair-divider" aria-hidden="true"> | </span><span>.06</span></td><td class="difficulty-start"><span class="rank-3" aria-label=".33, rank 3">.33</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".08, rank 3">.08</span></td><td><span class="rank-3" aria-label=".94, rank 3">.94</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".71, rank 3">.71</span></td><td><span>.14</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".26, rank 3">.26</span></td><td><span class="rank-3" aria-label=".13, rank 3">.13</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".09, rank 3">.09</span></td><td class="difficulty-start"><span class="rank-2" aria-label=".17, rank 2">.17</span><span class="pair-divider" aria-hidden="true"> | </span><span>.00</span></td><td><span class="rank-3" aria-label=".78, rank 3">.78</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".71, rank 1">.71</span></td><td><span class="rank-2" aria-label=".28, rank 2">.28</span><span class="pair-divider" aria-hidden="true"> | </span><span>.19</span></td><td><span class="rank-3" aria-label=".11, rank 3">.11</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".13, rank 3">.13</span></td></tr>
+              <tr><th scope="row">Kästner et al.</th><td class="difficulty-start"><span>.58</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".29, rank 3">.29</span></td><td><span>.81</span><span class="pair-divider" aria-hidden="true"> | </span><span>.87</span></td><td><span>.24</span><span class="pair-divider" aria-hidden="true"> | </span><span>.19</span></td><td><span class="rank-3" aria-label=".13, rank 3">.13</span><span class="pair-divider" aria-hidden="true"> | </span><span>.06</span></td><td class="difficulty-start"><span class="rank-3" aria-label=".33, rank 3">.33</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".08, rank 3">.08</span></td><td><span>.54</span><span class="pair-divider" aria-hidden="true"> | </span><span>.43</span></td><td><span>.22</span><span class="pair-divider" aria-hidden="true"> | </span><span>.14</span></td><td><span>.05</span><span class="pair-divider" aria-hidden="true"> | </span><span>.03</span></td><td class="difficulty-start"><span class="rank-2" aria-label=".17, rank 2">.17</span><span class="pair-divider" aria-hidden="true"> | </span><span>.00</span></td><td><span>.47</span><span class="pair-divider" aria-hidden="true"> | </span><span>.52</span></td><td><span>.20</span><span class="pair-divider" aria-hidden="true"> | </span><span>.12</span></td><td><span class="rank-3" aria-label=".11, rank 3">.11</span><span class="pair-divider" aria-hidden="true"> | </span><span>.04</span></td></tr>
+              <tr><th scope="row">Uni-NaVid-FT</th><td class="difficulty-start"><span>.17</span><span class="pair-divider" aria-hidden="true"> | </span><span>.13</span></td><td><span>.52</span><span class="pair-divider" aria-hidden="true"> | </span><span>.43</span></td><td><span>.22</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".24, rank 2">.24</span></td><td><span>.07</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".07, rank 2">.07</span></td><td class="difficulty-start"><span>.08</span><span class="pair-divider" aria-hidden="true"> | </span><span>.04</span></td><td><span>.42</span><span class="pair-divider" aria-hidden="true"> | </span><span>.39</span></td><td><span>.19</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".35, rank 2">.35</span></td><td><span>.06</span><span class="pair-divider" aria-hidden="true"> | </span><span>.06</span></td><td class="difficulty-start"><span>.00</span><span class="pair-divider" aria-hidden="true"> | </span><span>.00</span></td><td><span>.33</span><span class="pair-divider" aria-hidden="true"> | </span><span>.37</span></td><td><span>.17</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".29, rank 2">.29</span></td><td><span>.03</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".16, rank 2">.16</span></td></tr>
+              <tr><th scope="row">StarVLA</th><td class="difficulty-start"><span>.42</span><span class="pair-divider" aria-hidden="true"> | </span><span>.17</span></td><td><span>.78</span><span class="pair-divider" aria-hidden="true"> | </span><span>.64</span></td><td><span class="rank-1" aria-label=".36, rank 1">.36</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".24, rank 2">.24</span></td><td><span class="rank-2" aria-label=".16, rank 2">.16</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".07, rank 2">.07</span></td><td class="difficulty-start"><span class="rank-3" aria-label=".33, rank 3">.33</span><span class="pair-divider" aria-hidden="true"> | </span><span>.00</span></td><td><span>.80</span><span class="pair-divider" aria-hidden="true"> | </span><span>.61</span></td><td><span class="rank-1" aria-label=".40, rank 1">.40</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".26, rank 3">.26</span></td><td><span class="rank-2" aria-label=".18, rank 2">.18</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".10, rank 2">.10</span></td><td class="difficulty-start"><span>.08</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".04, rank 1">.04</span></td><td><span>.74</span><span class="pair-divider" aria-hidden="true"> | </span><span>.41</span></td><td><span class="rank-2" aria-label=".28, rank 2">.28</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".27, rank 3">.27</span></td><td><span class="rank-2" aria-label=".13, rank 2">.13</span><span class="pair-divider" aria-hidden="true"> | </span><span>.10</span></td></tr>
+              <tr class="ours-row"><th scope="row">LeadVLA</th><td class="difficulty-start"><span class="rank-2" aria-label=".75, rank 2">.75</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".46, rank 1">.46</span></td><td><span class="rank-3" aria-label=".96, rank 3">.96</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-3" aria-label=".89, rank 3">.89</span></td><td><span class="rank-2" aria-label=".35, rank 2">.35</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".34, rank 1">.34</span></td><td><span class="rank-1" aria-label=".23, rank 1">.23</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".25, rank 1">.25</span></td><td class="difficulty-start"><span class="rank-1" aria-label=".50, rank 1">.50</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".13, rank 1">.13</span></td><td><span class="rank-1" aria-label=".96, rank 1">.96</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".72, rank 2">.72</span></td><td><span class="rank-2" aria-label=".33, rank 2">.33</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".41, rank 1">.41</span></td><td><span class="rank-1" aria-label=".23, rank 1">.23</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".24, rank 1">.24</span></td><td class="difficulty-start"><span class="rank-1" aria-label=".50, rank 1">.50</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".04, rank 1">.04</span></td><td><span class="rank-2" aria-label=".92, rank 2">.92</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-2" aria-label=".69, rank 2">.69</span></td><td><span class="rank-1" aria-label=".35, rank 1">.35</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".32, rank 1">.32</span></td><td><span class="rank-1" aria-label=".34, rank 1">.34</span><span class="pair-divider" aria-hidden="true"> | </span><span class="rank-1" aria-label=".20, rank 1">.20</span></td></tr>
+              <tr class="expert-row"><th scope="row">Human Expert</th><td class="difficulty-start"><span>1.00</span><span class="pair-divider" aria-hidden="true"> | </span><span>.96</span></td><td><span>.99</span><span class="pair-divider" aria-hidden="true"> | </span><span>.98</span></td><td><span>.43</span><span class="pair-divider" aria-hidden="true"> | </span><span>.46</span></td><td><span>.56</span><span class="pair-divider" aria-hidden="true"> | </span><span>.51</span></td><td class="difficulty-start"><span>.83</span><span class="pair-divider" aria-hidden="true"> | </span><span>.83</span></td><td><span>.98</span><span class="pair-divider" aria-hidden="true"> | </span><span>.99</span></td><td><span>.43</span><span class="pair-divider" aria-hidden="true"> | </span><span>.41</span></td><td><span>.49</span><span class="pair-divider" aria-hidden="true"> | </span><span>.48</span></td><td class="difficulty-start"><span>.83</span><span class="pair-divider" aria-hidden="true"> | </span><span>.75</span></td><td><span>.93</span><span class="pair-divider" aria-hidden="true"> | </span><span>.91</span></td><td><span>.43</span><span class="pair-divider" aria-hidden="true"> | </span><span>.39</span></td><td><span>.46</span><span class="pair-divider" aria-hidden="true"> | </span><span>.46</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </figure>
+      </div>
+    </section>
+  </main>
+  <footer class="footer container"><a class="footer-name" href="#overview">LeadVLA</a><p>Anonymous research project · Under review</p><p class="credit">Layout inspired by the <a href="https://eliahuhorwitz.github.io/Academic-project-page-template/" target="_blank" rel="noopener noreferrer">Academic Project Page Template</a>.</p></footer>
+  <dialog id="figure-dialog" aria-label="Expanded research figure"><button type="button" class="dialog-close" aria-label="Close expanded figure">✕</button><img id="expanded-figure" alt=""></dialog>
+</body>
+</html>
